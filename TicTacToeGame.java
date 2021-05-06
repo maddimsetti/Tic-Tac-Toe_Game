@@ -8,8 +8,10 @@ import java.util.Scanner;
  * 
  */
 public class TicTacToeGame {
-	static String[] board = new String[10];
-	static String turn;
+	private static String[] board = new String[10];
+	private static String computer;
+	private String player;
+	private static final Scanner sc = new Scanner(System.in);
 
 	/**
 	 * @description Private Method to initializing TicTacToeBoard and set the board
@@ -18,29 +20,33 @@ public class TicTacToeGame {
 	 * 
 	 */
 	private void IntializingBoard() {
-		for (int a = 0; a < 9; a++) { // for loop to initializing board
-			board[a] = String.valueOf(a + 1); // values stores in array string
+		for (int a = 1; a < 10; a++) { // for loop to initializing board
+			board[a] = String.valueOf(a); // values stores in array string
 		}
 	}
 
 	/**
 	 * @description Method to create for choosing Player option
-	 * @param None
+	 * @param Choose the player as option X or O
 	 * 
 	 */
 	private void chooseYourOption() {
-		System.out.println("Choose the Option X or O");
-		Scanner sc = new Scanner(System.in);
-		String player = sc.nextLine();
-		sc.close();
-		if (player.equals("X")) { // player choose X option
-			player = "X";
-			turn = "O";
-		} else if (player.equals("O")) { // player Choose O option
-			player = "O";
-			turn = "X";
-		} else
-			System.out.println("Invalid Input");
+		boolean validOption = false; // input validation
+		do {
+			System.out.println("Choose the Option X or O");
+			String option = sc.nextLine();
+			if (option.equals("X")) { // player choose X option
+				player = "X";
+				computer = "O";
+				validOption = true;
+			} else if (option.equals("O")) { // player Choose O option
+				player = "O";
+				computer = "X";
+				validOption = true;
+			} else {
+				System.out.println("Invalid Option");
+			}
+		} while (!validOption); // repeat until input valid
 	}
 
 	/**
@@ -50,26 +56,45 @@ public class TicTacToeGame {
 	 */
 	private void printBoard() {
 		System.out.println("|---|---|---|");
-		System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
+		System.out.println("| " + board[1] + " | " + board[2] + " | " + board[3] + " |");
 		System.out.println("|-----------|");
-		System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
+		System.out.println("| " + board[4] + " | " + board[5] + " | " + board[6] + " |");
 		System.out.println("|-----------|");
-		System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
+		System.out.println("| " + board[7] + " | " + board[8] + " | " + board[9] + " |");
 		System.out.println("|---|---|---|");
 	}
 
 	/**
-	 * @description Method to Create Current Board
-	 * @param None
+	 * @description Method to Create for user to make a move to a desired location
+	 *              in the board
+	 * @param Input will take input from user like from 1 to 9. If it is not in
+	 *              range from 1 to 9. Then it will show you an error "Invalid
+	 *              input."
 	 * 
 	 */
+	private void desiredLocation() {
+		boolean validInput = false; // input validation
+		do {
+			System.out.println("Enter the Choice");
+			int input = sc.nextInt();
+			if (input > 0 && input < 10) {
+				board[input] = player;
+				printBoard();
+				validInput = true;
+			} else
+				System.out.println("Invalid input; re-enter slot number:");
+		} while (!validInput); // repeat until input is valid
+	}
+
+	// Explanation How to implement the Computation
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Welcome to Tic-Tac-Toe Game");
 		TicTacToeGame tictactoegame = new TicTacToeGame();// Create Object related to Class
 		tictactoegame.IntializingBoard();// relation between Main and InitializingBoard Method
 		tictactoegame.chooseYourOption();// relation between Main and Player Option
-		tictactoegame.printBoard();
+		tictactoegame.printBoard(); // relation between Main and PrintBoard
+		tictactoegame.desiredLocation(); //relation between Main and Location to move
 	}
 
 }
