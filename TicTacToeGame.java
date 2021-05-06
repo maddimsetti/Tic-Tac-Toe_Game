@@ -67,20 +67,24 @@ public class TicTacToeGame {
 	/**
 	 * @description Method to Create for user to make a move to a desired location
 	 *              in the board
-	 * @param Input will take input from user like from 1 to 9. If it is not in
-	 *              range from 1 to 9. Then it will show you an error "Invalid
-	 *              input."
-	 * 
+	 * @param 1.Input will take input from user like from 1 to 9. If it is not in
+	 *                range from 1 to 9. Then it will show you an error "Invalid
+	 *                input." 2.Check if the free space is available for the move.In
+	 *                case available make move to desired location
 	 */
-	private void desiredLocation() {
+	private void moveToDesiredLocation() {
 		boolean validInput = false; // input validation
 		do {
-			System.out.println("Enter the Choice");
+			System.out.println("Enter the Input");
 			int input = sc.nextInt();
 			if (input > 0 && input < 10) {
+				if (board[input] == "X" || board[input] == "O") { // Checking free space available or not
+					System.out.println("The Position is Occupied,Kindly Select another Input");
+					validInput = false; // repeat until free space available
+				}
 				board[input] = player;
-				printBoard();
-				validInput = true;
+				printBoard(); // updating the game-Board content
+				validInput = true; // input valid,exit the loop
 			} else
 				System.out.println("Invalid input; re-enter slot number:");
 		} while (!validInput); // repeat until input is valid
@@ -94,7 +98,7 @@ public class TicTacToeGame {
 		tictactoegame.IntializingBoard();// relation between Main and InitializingBoard Method
 		tictactoegame.chooseYourOption();// relation between Main and Player Option
 		tictactoegame.printBoard(); // relation between Main and PrintBoard
-		tictactoegame.desiredLocation(); //relation between Main and Location to move
+		tictactoegame.moveToDesiredLocation(); // relation between Main and Location to move
 	}
 
 }
