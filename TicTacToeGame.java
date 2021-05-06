@@ -1,12 +1,15 @@
 package tictactoe;
 
+import java.util.Scanner;
+
 /**
  * @description create Class for defining the TicTacToeGame
  * @param None
  * 
  */
 public class TicTacToeGame {
-	static String[] board;
+	static String[] board = new String[10];
+	static String turn;
 
 	/**
 	 * @description Private Method to initializing TicTacToeBoard and set the board
@@ -16,8 +19,28 @@ public class TicTacToeGame {
 	 */
 	private void IntializingBoard() {
 		for (int a = 0; a < 9; a++) { // for loop to initializing board
-			board[a] = String.valueOf(a + 1); //values stores in array string
+			board[a] = String.valueOf(a + 1); // values stores in array string
 		}
+	}
+
+	/**
+	 * @description Method to create for choosing Player option
+	 * @param None
+	 * 
+	 */
+	private void chooseYourOption() {
+		System.out.println("Choose the Option X or O");
+		Scanner sc = new Scanner(System.in);
+		String player = sc.nextLine();
+		sc.close();
+		if (player.equals("X")) { // player choose X option
+			player = "X";
+			turn = "O";
+		} else if (player.equals("O")) { // player Choose O option
+			player = "O";
+			turn = "X";
+		} else
+			System.out.println("Invalid Input");
 	}
 
 	/**
@@ -30,6 +53,7 @@ public class TicTacToeGame {
 		System.out.println("Welcome to Tic-Tac-Toe Game");
 		TicTacToeGame tictactoegame = new TicTacToeGame();// Create Object related to Class
 		tictactoegame.IntializingBoard();// relation between Main and InitializingBoard Method
+		tictactoegame.chooseYourOption();// relation between Main and Player Option
 	}
 
 }
