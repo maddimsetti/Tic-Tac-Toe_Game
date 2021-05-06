@@ -1,5 +1,6 @@
 package tictactoe;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -11,6 +12,7 @@ public class TicTacToeGame {
 	private static String[] board = new String[10];
 	private static String computer;
 	private String player;
+	private String turn;
 	private static final Scanner sc = new Scanner(System.in);
 
 	/**
@@ -20,8 +22,8 @@ public class TicTacToeGame {
 	 * 
 	 */
 	private void IntializingBoard() {
-		for (int a = 1; a < 10; a++) { // for loop to initializing board
-			board[a] = String.valueOf(a); // values stores in array string
+		for (int square = 1; square < 10; square++) { // for loop to initializing board
+			board[square] = String.valueOf(square); // values stores in array string
 		}
 	}
 
@@ -66,11 +68,11 @@ public class TicTacToeGame {
 
 	/**
 	 * @description Method to Create for user to make a move to a desired location
-	 *              in the board
-	 * @param 1.Input will take input from user like from 1 to 9. If it is not in
-	 *                range from 1 to 9. Then it will show you an error "Invalid
-	 *                input." 2.Check if the free space is available for the move.In
-	 *                case available make move to desired location
+	 *              in the board. 1.Input will take input from user like from 1 to
+	 *              9. If it is not in range from 1 to 9. Then it will show you an
+	 *              error "Invalid input." 2.Check if the free space is available
+	 *              for the move.In case available make move to desired location
+	 * @param None
 	 */
 	private void moveToDesiredLocation() {
 		boolean validInput = false; // input validation
@@ -90,6 +92,80 @@ public class TicTacToeGame {
 		} while (!validInput); // repeat until input is valid
 	}
 
+	/**
+	 * @description Method to Create to flip a coin who plays first select either 0
+	 *              for Tail or 1 for Head
+	 * @param None
+	 * 
+	 */
+	private void tossToCheckWhoFirst() {
+		System.out.println("Select 0 for Tail or 1 for Head to see who plays first");
+		int playerSelection = sc.nextInt(); // player selecting the option either 0 or 1
+		int toss = (int) Math.floor(Math.random() * 10) % 2;
+		if (playerSelection == toss)
+			System.out.println("Player Won the Toss and Plays First");
+		else
+			System.out.println("Computer Won the Toss and Plays First");
+	}
+
+	/**
+	 * @description Method to create to check winner by decide the Combination of
+	 *              three boxes given below
+	 * @param None
+	 * 
+	 */
+	private String checkWinner() {
+		for (int square = 1; square < 9; square++) {
+			String line = null;
+			switch (square) {
+			case 0:
+				line = board[1] + board[2] + board[3];
+				break;
+			case 1:
+				line = board[4] + board[5] + board[6];
+				break;
+			case 2:
+				line = board[7] + board[8] + board[9];
+				break;
+			case 3:
+				line = board[1] + board[4] + board[7];
+				break;
+			case 4:
+				line = board[2] + board[5] + board[8];
+				break;
+			case 5:
+				line = board[3] + board[6] + board[9];
+				break;
+			case 6:
+				line = board[1] + board[5] + board[9];
+				break;
+			case 7:
+				line = board[1] + board[5] + board[7];
+				break;
+			}
+			// For X winner
+			if (line.equals("XXX")) {
+				return "X";
+			}
+
+			// For O winner
+			else if (line.equals("OOO")) {
+				return "O";
+			}
+		}
+
+		for (int square = 1; square < 10; square++) {
+			if (Arrays.asList(board).contains(String.valueOf(square))) {
+				break;
+			} else if (square == 9) {
+				return "draw";
+			}
+		}
+		// To enter the X Or O at the exact place on board.
+		System.out.println(turn + "'s turn; enter a slot number to place " + turn + " in:");
+		return null;
+	}
+
 	// Explanation How to implement the Computation
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -99,6 +175,8 @@ public class TicTacToeGame {
 		tictactoegame.chooseYourOption();// relation between Main and Player Option
 		tictactoegame.printBoard(); // relation between Main and PrintBoard
 		tictactoegame.moveToDesiredLocation(); // relation between Main and Location to move
+		tictactoegame.tossToCheckWhoFirst();
+		tictactoegame.checkWinner();
 	}
 
 }
