@@ -44,6 +44,21 @@ public class TicTacToeGame {
 	}
 
 	/**
+	 * @description Method to Create Print Board
+	 * @param None
+	 * 
+	 */
+	private void printBoard() {
+		System.out.println("|---|---|---|");
+		System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
+		System.out.println("|-----------|");
+		System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
+		System.out.println("|-----------|");
+		System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
+		System.out.println("|---|---|---|");
+	}
+
+	/**
 	 * @description Method to Create Current Board
 	 * @param None
 	 * 
@@ -54,6 +69,7 @@ public class TicTacToeGame {
 		TicTacToeGame tictactoegame = new TicTacToeGame();// Create Object related to Class
 		tictactoegame.IntializingBoard();// relation between Main and InitializingBoard Method
 		tictactoegame.chooseYourOption();// relation between Main and Player Option
+		tictactoegame.printBoard();
 	}
 
 }
