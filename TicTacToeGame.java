@@ -84,7 +84,7 @@ public class TicTacToeGame {
 					System.out.println("The Position is Occupied,Kindly Select another Input");
 					validInput = false; // repeat until free space available
 				}
-				board[input] = player;
+				board[input] = turn;
 				printBoard(); // updating the game-Board content
 				validInput = true; // input valid,exit the loop
 			} else
@@ -102,10 +102,13 @@ public class TicTacToeGame {
 		System.out.println("Select 0 for Tail or 1 for Head to see who plays first");
 		int playerSelection = sc.nextInt(); // player selecting the option either 0 or 1
 		int toss = (int) Math.floor(Math.random() * 10) % 2;
-		if (playerSelection == toss)
+		if (playerSelection == toss) {
 			System.out.println("Player Won the Toss and Plays First");
-		else
+			turn = player;
+		} else {
 			System.out.println("Computer Won the Toss and Plays First");
+			turn = computer;
+		}
 	}
 
 	/**
@@ -147,13 +150,11 @@ public class TicTacToeGame {
 			if (line.equals("XXX")) {
 				return "X";
 			}
-
 			// For O winner
 			else if (line.equals("OOO")) {
 				return "O";
 			}
 		}
-
 		for (int square = 1; square < 10; square++) {
 			if (Arrays.asList(board).contains(String.valueOf(square))) {
 				break;
@@ -166,16 +167,42 @@ public class TicTacToeGame {
 		return null;
 	}
 
+	/**
+	 * @description Method to Create Computer getting its turn would like the
+	 *              computer to play like me
+	 * @param None
+	 * 
+	 */
+	public void computerMove() {
+		moveToDesiredLocation(); // calling the moveToDesiredLocation method
+	}
+
+	/**
+	 * @description Method to Create game play who first and then next
+	 * @param None
+	 * 
+	 */
+	private void play() {
+		tossToCheckWhoFirst(); // calling the tossToCheckWhoFirst method
+		moveToDesiredLocation(); // calling the moveToDesiredLocation method
+		if (turn.equals(player)) {
+			turn = computer; // storing the value
+		} else {
+			turn = player;
+		}
+		computerMove(); // calling the computer move method
+	}
+
 	// Explanation How to implement the Computation
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Welcome to Tic-Tac-Toe Game");
 		TicTacToeGame tictactoegame = new TicTacToeGame();// Create Object related to Class
 		tictactoegame.IntializingBoard();// relation between Main and InitializingBoard Method
-		tictactoegame.chooseYourOption();// relation between Main and Player Option
+		System.out.println("Welcome to 3*3 Tic Tac Toe Game");
 		tictactoegame.printBoard(); // relation between Main and PrintBoard
-		tictactoegame.moveToDesiredLocation(); // relation between Main and Location to move
-		tictactoegame.tossToCheckWhoFirst();
+		tictactoegame.chooseYourOption();// relation between Main and Player Option
+		tictactoegame.play();
 		tictactoegame.checkWinner();
 	}
 
